@@ -14,9 +14,6 @@ Group:		Applications
 Source0:	http://mesh.dl.sourceforge.net/sourceforge/autopsy/%{name}-%{version}.tar.gz
 # Source0-md5:	0ac9db9acf66742f8f01f3d8b0cf2f90
 URL:		http://www.sleuthkit.org/autopsy
-BuildRequires:	openssl-devel
-BuildRequires:	perl-base
-BuildRequires:	sleuthkit
 Requires:	coreutils
 Requires:	perl-Date-Manip
 Requires:	openssl
