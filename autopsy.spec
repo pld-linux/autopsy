@@ -1,10 +1,9 @@
 # TODO
 #	- %%service stuff
 #	- add user autopsy with proper homedir rights
-#	- pl desc
 %include	/usr/lib/rpm/macros.perl
-Summary:	The Autopsy Forensic Browser is a graphical interface to The Sleuth Kit utilities
-Summary(pl):	Autopsy Forensic Browser jest graficznym interfejsem do narzêdzi z The Sleuth Kit
+Summary:	The Autopsy Forensic Browser - a graphical interface to The Sleuth Kit utilities
+Summary(pl):	Autopsy Forensic Browser - graficzny interfejs do narzêdzi z The Sleuth Kit
 Name:		autopsy
 Version:	2.08
 Release:	0.3
@@ -15,10 +14,13 @@ Source0:	http://dl.sourceforge.net/autopsy/%{name}-%{version}.tar.gz
 URL:		http://www.sleuthkit.org/autopsy
 BuildRequires:	rpm-perlprov >= 4.1-13
 Requires:	coreutils
-Requires:	libmagic
+Requires:	file
+# check: openssl contains only shared lib and I don't see any native code here
+# shouldn't it be openssl-tools or some openssl-based perl module?
 Requires:	openssl
 Requires:	perl-Date-Manip
 Requires:	sleuthkit
+# noarch?
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -30,6 +32,16 @@ files, data units, and metadata of NTFS, FAT, EXTxFS, and UFS file
 system images in a read-only environment. Autopsy allows you to search
 for specific types of evidence based on keywords, MAC times, hash
 values, and file types.
+
+%description -l pl
+Autopsy Forensic Browser to graficzny interfejs do narzêdzi z pakietu
+The Sleuth Kit (TSK). TSK to zbiór programów dzia³aj±cych z linii
+poleceñ pozwalaj±cych zbadaæ system Windows lub uniksowy poprzez
+sprawdzanie zawarto¶ci twardego dysku. TSK i Autopsy pokazuj± pliki,
+jednostki danych i metadane obrazów systemów plików NTFS, FAT, EXTxFS
+i UFS w ¶rodowisku tylko do odczytu. Autopsy pozwala wyszukiwaæ
+okre¶lone rodzaje dowodów w oparciu o s³owa kluczowe, czasy MAC,
+warto¶ci haszy i rodzaje plików.
 
 %prep
 %setup -q
@@ -70,13 +82,12 @@ EOF
 rm -rf $RPM_BUILD_ROOT
 
 install -d $RPM_BUILD_ROOT%{_bindir}
-install -d $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 install -d $RPM_BUILD_ROOT%{_mandir}/man1
 install -d $RPM_BUILD_ROOT/home/services/autopsy
 install -d $RPM_BUILD_ROOT%{perl_vendorlib}/Autopsy/{lib,pict}
 
 install autopsy $RPM_BUILD_ROOT%{_bindir}
-install conf.pl $RPM_BUILD_ROOT%{perl_vendorlib}/Autopsy/
+install conf.pl $RPM_BUILD_ROOT%{perl_vendorlib}/Autopsy
 install lib/* $RPM_BUILD_ROOT%{perl_vendorlib}/Autopsy/lib
 install pict/* $RPM_BUILD_ROOT%{perl_vendorlib}/Autopsy/pict
 
