@@ -3,7 +3,7 @@
 #	- add user autopsy with proper homedir rights
 %include	/usr/lib/rpm/macros.perl
 Summary:	The Autopsy Forensic Browser - a graphical interface to The Sleuth Kit utilities
-Summary(pl):	Autopsy Forensic Browser - graficzny interfejs do narzêdzi z The Sleuth Kit
+Summary(pl.UTF-8):   Autopsy Forensic Browser - graficzny interfejs do narzÄ™dzi z The Sleuth Kit
 Name:		autopsy
 Version:	2.08
 Release:	0.3
@@ -33,15 +33,15 @@ system images in a read-only environment. Autopsy allows you to search
 for specific types of evidence based on keywords, MAC times, hash
 values, and file types.
 
-%description -l pl
-Autopsy Forensic Browser to graficzny interfejs do narzêdzi z pakietu
-The Sleuth Kit (TSK). TSK to zbiór programów dzia³aj±cych z linii
-poleceñ pozwalaj±cych zbadaæ system Windows lub uniksowy poprzez
-sprawdzanie zawarto¶ci twardego dysku. TSK i Autopsy pokazuj± pliki,
-jednostki danych i metadane obrazów systemów plików NTFS, FAT, EXTxFS
-i UFS w ¶rodowisku tylko do odczytu. Autopsy pozwala wyszukiwaæ
-okre¶lone rodzaje dowodów w oparciu o s³owa kluczowe, czasy MAC,
-warto¶ci haszy i rodzaje plików.
+%description -l pl.UTF-8
+Autopsy Forensic Browser to graficzny interfejs do narzÄ™dzi z pakietu
+The Sleuth Kit (TSK). TSK to zbiÃ³r programÃ³w dziaÅ‚ajÄ…cych z linii
+poleceÅ„ pozwalajÄ…cych zbadaÄ‡ system Windows lub uniksowy poprzez
+sprawdzanie zawartoÅ›ci twardego dysku. TSK i Autopsy pokazujÄ… pliki,
+jednostki danych i metadane obrazÃ³w systemÃ³w plikÃ³w NTFS, FAT, EXTxFS
+i UFS w Å›rodowisku tylko do odczytu. Autopsy pozwala wyszukiwaÄ‡
+okreÅ›lone rodzaje dowodÃ³w w oparciu o sÅ‚owa kluczowe, czasy MAC,
+wartoÅ›ci haszy i rodzaje plikÃ³w.
 
 %prep
 %setup -q
