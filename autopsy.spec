@@ -1,16 +1,17 @@
 # TODO
-#	- %%service stuff
-#	- add user autopsy with proper homedir rights
+#	- change use/require Appsort to Autopsy::lib::Appsort or Autopsy::Appsort and more
+#
 %include	/usr/lib/rpm/macros.perl
 Summary:	The Autopsy Forensic Browser - a graphical interface to The Sleuth Kit utilities
 Summary(pl.UTF-8):	Autopsy Forensic Browser - graficzny interfejs do narzędzi z The Sleuth Kit
 Name:		autopsy
-Version:	2.08
-Release:	0.3
+Version:	2.21
+Release:	1
 License:	GPL
 Group:		Applications
 Source0:	http://dl.sourceforge.net/autopsy/%{name}-%{version}.tar.gz
-# Source0-md5:	0ac9db9acf66742f8f01f3d8b0cf2f90
+# Source0-md5:	48d970749861cde7b850283636c6c4dd
+Source1:	%{name}.init
 URL:		http://www.sleuthkit.org/autopsy
 BuildRequires:	rpm-perlprov >= 4.1-13
 Requires:	coreutils
@@ -20,6 +21,34 @@ Requires:	file
 Requires:	openssl
 Requires:	perl-Date-Manip
 Requires:	sleuthkit
+Requires(post,preun):	/sbin/chkconfig
+Requires(postun):	/usr/sbin/groupdel
+Requires(postun):	/usr/sbin/userdel
+Requires(pre):	/bin/id
+Requires(pre):	/usr/bin/getgid
+Requires(pre):	/usr/sbin/groupadd
+Requires(pre):	/usr/sbin/useradd
+# some script/macro finds that autopsy requires the following perl modules
+# which are provided in the package - as a workaround we provide them:
+# (but this pollutes a perl module namespace)
+Provides:	perl(Appsort)
+Provides:	perl(Appview)
+Provides:	perl(Args)
+Provides:	perl(Caseman)
+Provides:	perl(Data)
+Provides:	perl(Exec)
+Provides:	perl(File)
+Provides:	perl(Filesystem)
+Provides:	perl(Frame)
+Provides:	perl(Fs)
+Provides:	perl(Hash)
+Provides:	perl(Kwsrch)
+Provides:	perl(Main)
+Provides:	perl(Meta)
+Provides:	perl(Notes)
+Provides:	perl(Print)
+Provides:	perl(Timeline)
+Provides:	perl(Vs)
 # noarch?
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -73,6 +102,8 @@ cat > conf.pl <<-'EOF'
 	# Directories
 	$TSKDIR = '%{_bindir}';
 	$FILE_EXE = '%{_bindir}/file';
+	$MD5_EXE = '%{_bindir}/md5sum';
+	$SHA1_EXE = '%{_bindir}/sha1sum';
 	$NSRLDB = '';
 # FIXME: FHS: /var/{lib,run}/autopsy?
 	$LOCKDIR = '/home/services/autopsy';
@@ -93,8 +124,27 @@ install pict/* $RPM_BUILD_ROOT%{perl_vendorlib}/Autopsy/pict
 
 install man/man1/* $RPM_BUILD_ROOT%{_mandir}/man1
 
+install -d $RPM_BUILD_ROOT/etc/rc.d/init.d
+install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/autopsy
+
 %clean
 rm -rf $RPM_BUILD_ROOT
+
+%pre
+%groupadd -g 178 autopsy
+%useradd -u 178 -r -d /home/services/autopsy -s /bin/false -c "Autopsy user" -g autopsy autopsy
+
+%post
+/sbin/chkconfig --add autopsy
+
+%preun
+%service autopsy stop
+/sbin/chkconfig --del autopsy
+
+%postun
+%userremove autopsy
+%groupremove autopsy
+
 
 %files
 %defattr(644,root,root,755)
@@ -105,4 +155,5 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_vendorlib}/Autopsy/lib
 %{perl_vendorlib}/Autopsy/pict
 %{_mandir}/man1/*
-/home/services/autopsy
+%attr(750,autopsy,autopsy) /home/services/autopsy
+%attr(754,root,root) /etc/rc.d/init.d/autopsy
