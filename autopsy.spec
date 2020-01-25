@@ -1,7 +1,6 @@
 # TODO
 #	- change use/require Appsort to Autopsy::lib::Appsort or Autopsy::Appsort and more
 #
-%include	/usr/lib/rpm/macros.perl
 Summary:	The Autopsy Forensic Browser - a graphical interface to The Sleuth Kit utilities
 Summary(pl.UTF-8):	Autopsy Forensic Browser - graficzny interfejs do narzędzi z The Sleuth Kit
 Name:		autopsy
