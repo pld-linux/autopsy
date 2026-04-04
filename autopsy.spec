@@ -5,7 +5,7 @@ Summary:	The Autopsy Forensic Browser - a graphical interface to The Sleuth Kit 
 Summary(pl.UTF-8):	Autopsy Forensic Browser - graficzny interfejs do narzędzi z The Sleuth Kit
 Name:		autopsy
 Version:	2.24
-Release:	2
+Release:	3
 License:	GPL
 Group:		Applications
 Source0:	http://dl.sourceforge.net/autopsy/%{name}-%{version}.tar.gz
@@ -20,6 +20,7 @@ Requires:	file
 Requires:	openssl
 Requires:	perl-Date-Manip
 Requires:	sleuthkit
+BuildArch:	noarch
 Requires(post,preun):	/sbin/chkconfig
 Requires(postun):	/usr/sbin/groupdel
 Requires(postun):	/usr/sbin/userdel
