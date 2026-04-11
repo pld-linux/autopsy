@@ -8,7 +8,7 @@ Version:	2.24
 Release:	4
 License:	GPL
 Group:		Applications
-Source0:	http://dl.sourceforge.net/autopsy/%{name}-%{version}.tar.gz
+Source0:	https://downloads.sourceforge.net/autopsy/%{name}-%{version}.tar.gz
 # Source0-md5:	4ed18aa9f79453d74957b5db220d0d59
 Source1:	%{name}.init
 URL:		http://www.sleuthkit.org/autopsy
@@ -20,7 +20,6 @@ Requires:	file
 Requires:	openssl
 Requires:	perl-Date-Manip
 Requires:	sleuthkit
-BuildArch:	noarch
 Requires(post,preun):	/sbin/chkconfig
 Requires(postun):	/usr/sbin/groupdel
 Requires(postun):	/usr/sbin/userdel
@@ -28,9 +27,12 @@ Requires(pre):	/bin/id
 Requires(pre):	/usr/bin/getgid
 Requires(pre):	/usr/sbin/groupadd
 Requires(pre):	/usr/sbin/useradd
+Provides:	group(autopsy)
+Provides:	user(autopsy)
 # some script/macro finds that autopsy requires the following perl modules
 # which are provided in the package - as a workaround we provide them:
 # (but this pollutes a perl module namespace)
+# FIXME: use _noautoreq instead!
 Provides:	perl(Appsort)
 Provides:	perl(Appview)
 Provides:	perl(Args)
@@ -49,7 +51,7 @@ Provides:	perl(Notes)
 Provides:	perl(Print)
 Provides:	perl(Timeline)
 Provides:	perl(Vs)
-# noarch?
+BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -149,11 +151,11 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc README.txt docs/sleuthkit-informer-13.txt
-%attr(755,root,root) %{_bindir}/*
+%attr(755,root,root) %{_bindir}/autopsy
 %dir %{perl_vendorlib}/Autopsy
 %{perl_vendorlib}/Autopsy/conf.pl
 %{perl_vendorlib}/Autopsy/lib
 %{perl_vendorlib}/Autopsy/pict
-%{_mandir}/man1/*
+%{_mandir}/man1/autopsy.1*
 %attr(750,autopsy,autopsy) /home/services/autopsy
 %attr(754,root,root) /etc/rc.d/init.d/autopsy
